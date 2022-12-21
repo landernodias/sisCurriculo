@@ -5,10 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use PhpParser\Builder\Property;
-use Illuminate\Http\Client\Request;
-use Illuminate\Support\Arr;
-use PhpParser\Node\Expr\Cast\Array_;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -44,6 +41,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
         $input = $request->all();
 
         $this->validate($request, [
@@ -51,35 +49,29 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if(auth()->attempt(array(
-            'cpf' => $input['username'],
-            'password' => $input['password'])) ||
-        auth()->attempt(array(
-            'email' => $input['email'],
-            'password' => $input['password'])))
+        // dd($input);
+        if( auth()->attempt(array('cpf' => $input['username'], 'password' => $input['password'])) || auth()->attempt(array('email' => $input['username'], 'password' => $input['password'])))
         {
-            if (auth()->user()->type == 'gestor') {
+            if(auth()->user()->type == 'gestor') {
                 return redirect()->route('manager.dashboard');
-            }else if (auth()->user()->type == 'administrativo') {
+            }else if(auth()->user()->type == 'administrativo') {
                 return redirect()->route('dashboard');
-            }else{
-            return redirect()->route('login')
-                ->with('error','Endereço de Email|cpf ou senha estão incorreto!.');
             }
+        }
+        else
+        {
+            return redirect()->route('login')
+                ->with('error','Endereço de Email e senha incorreto!');
         }
 
     }
 
-    // public function username()
-    // {
-    //     # pega os valores do input
-    //     $loginValue = request('username');
-    //     # verifica se tem email valido ou texto valido
-    //     $this->username = filter_var($loginValue, FILTER_VALIDATE_EMAIL) ? 'email': 'cpf';
-    //     //dd($username);
-    //     # faz um merge nos valores
-    //     request()->merge([$this->username => $loginValue]);
-    //     # retorna o tipo de login
-    //     return property_exists($this, 'cpf') ? $this->username : 'email';
-    // }
+//    public function username() {
+//        $loginValue = request('username');
+//        $this->username = filter_var($loginValue, FILTER_VALIDATE_EMAIL) ? 'email' : 'cpf';
+//        request()->merge([$this->username() => $loginValue]);
+//        return property_exists($this, 'cpf') ? $this->username : 'email';
+//
+//    }
+
 }

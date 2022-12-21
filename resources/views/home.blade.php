@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    visão usuario administrador
                 </div>
             </div>
         </div>

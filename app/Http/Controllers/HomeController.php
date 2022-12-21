@@ -25,4 +25,12 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function managerDashboard() {
+        return view('manager_dashboard');
+    }
+
+    public function superAdminDashboard() {
+        return view('super_admin_dashboard');
+    }
 }

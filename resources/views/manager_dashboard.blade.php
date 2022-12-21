@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
                 <div class="card-body">
-                    You are login as a manager role.
+                    visão usuário Gestor
                 </div>
             </div>
         </div>

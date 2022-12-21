@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('cpf')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->tinyInteger('type')->default(0);
+            $table->tinyInteger('type')->default(0);/* Users: 0=>administrativo, 1=>gestor*/
             $table->rememberToken();
             $table->timestamps();
         });
